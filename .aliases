@@ -1,0 +1,8 @@
+# Shared Codespaces and shell helpers (sourced by bash and zsh)
+alias gs='git status -sb'
+alias gl='git log --oneline --graph --decorate -n 20'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias ghpr='gh pr list --limit 15'
+alias ghruns='gh run list --limit 10'
+alias py='python3'

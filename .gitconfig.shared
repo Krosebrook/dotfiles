@@ -1,0 +1,18 @@
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[fetch]
+	prune = true
+[rerere]
+	enabled = true
+[push]
+	autoSetupRemote = true
+[diff]
+	algorithm = histogram
+	colorMoved = default
+[alias]
+	st = status -sb
+	lg = log --oneline --graph --decorate -n 20
+	last = log -1 HEAD --stat
+	unstage = restore --staged

@@ -1,0 +1,32 @@
+name: verify-dotfiles
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: ShellCheck install.sh
+        run: shellcheck install.sh
+
+      - name: Test idempotent bootstrap in isolated HOME
+        run: |
+          TMP_HOME="$(mktemp -d)"
+          HOME="${TMP_HOME}" bash ./install.sh
+          HOME="${TMP_HOME}" bash ./install.sh
+          test -f "${TMP_HOME}/.gitconfig.shared"
+          test -f "${TMP_HOME}/.aliases"
+          COUNT="$(grep -Fc '.aliases' "${TMP_HOME}/.bashrc")"
+          test "${COUNT}" -eq 1
